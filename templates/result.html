@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction: {{ prediction }} - AI News Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="nav-brand">
+            <div class="nav-logo-badge">NC</div>
+            <span class="nav-title">News Classifier AI</span>
+        </a>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="{{ url_for('home') }}" class="btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
+                &larr; New Search
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+
+        <!-- Result Hero Card -->
+        <div class="result-header-card cat-theme-{{ prediction_id }}" style="margin-bottom: 2rem;">
+            <div class="result-badge">
+                <span style="font-size: 1.2rem;">{{ meta.icon }}</span>
+                <span>Predicted Category: {{ prediction }}</span>
+            </div>
+
+            <div class="result-headline-quote">
+                &ldquo;{{ data }}&rdquo;
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                <span>Category ID: #{{ prediction_id }}</span>
+                <span>&bull;</span>
+                <span>Model: Multinomial Naive Bayes</span>
+            </div>
+        </div>
+
+        <!-- Headline Confidence Card -->
+        <div style="margin-bottom: 2rem;">
+            <div class="metric-card cat-theme-{{ prediction_id }}" style="padding: 2rem;">
+                <div class="metric-label">Prediction Confidence Score</div>
+                <div class="metric-value" style="font-size: 3.5rem;">{{ confidence }}%</div>
+                <div class="meter-container" style="height: 10px; margin-top: 0.75rem;">
+                    <div class="meter-fill" id="confidence-bar"></div>
+                </div>
+                <div class="metric-subtext" style="font-size: 0.9rem; margin-top: 0.5rem;">
+                    Dynamic probability that this specific headline belongs to <strong>{{ prediction }}</strong>.
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="action-footer">
+            <a href="{{ url_for('home') }}" class="btn-submit" style="text-decoration: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Classify Another Headline</span>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('confidence-bar').style.width = '{{ confidence }}%';
+    </script>
+</body>
+</html>
